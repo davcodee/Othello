@@ -335,7 +335,7 @@ class Tablero {
         mundo[i][posY] = getColorActual();
       }
     }
-    return valido;
+    return Valido;
   }
 
   /**
