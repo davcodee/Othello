@@ -32,7 +32,7 @@ void draw(){
  */
 void mousePressed() {
   println("\nClic en la casilla " + "[" + mouseX/tablero.tamCasilla + ", " + mouseY/tablero.tamCasilla + "]");
-  if(!tablero.estaOcupado(mouseX/tablero.tamCasilla, mouseY/tablero.tamCasilla)){
+  if(!tablero.estaOcupado(mouseX/tablero.tamCasilla, mouseY/tablero.tamCasilla) && tablero.movimientoValido(mouseX/tablero.tamCasilla, mouseY/tablero.tamCasilla)){
     tablero.setFicha(mouseX/tablero.tamCasilla, mouseY/tablero.tamCasilla);
     tablero.cambiarTurno();
     println("[Turno #" + tablero.numeroDeTurno + "] "  + (tablero.turno ? "jugó ficha blanca" : "jugó ficha negra") + " (Score: " + int(tablero.cantidadFichas().x) + " - " + int(tablero.cantidadFichas().y) + ")");
