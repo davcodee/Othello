@@ -1,7 +1,7 @@
 import java.util.*;
-public class Nodo{
+public class Nodo<Tablero>{
 
-    public LinkedList<Nodo> hijos;
+    public LinkedList<Nodo<Tablero>> hijos;
     private Tablero tablero;
 
 
@@ -9,7 +9,7 @@ public class Nodo{
     public Nodo(Tablero t){
 
         this.tablero = t;
-        hijos = new LinkedList<Nodo>();
+        hijos = new LinkedList<Nodo<Tablero>>();
     }
 
 
@@ -21,7 +21,7 @@ public class Nodo{
         return this.tablero;
     }
 
-    public LinkedList<Nodo> getHjos(){
+    public LinkedList<Nodo<Tablero>> getHjos(){
         return hijos;
     }
     /*
@@ -34,7 +34,7 @@ public class Nodo{
     /*
      * Método que agrega un nodo hijo
      */
-    public void agregaHijo(Nodo n){
+    public void agregaHijo(Nodo<Tablero> n){
         hijos.add(n);
     }
 
