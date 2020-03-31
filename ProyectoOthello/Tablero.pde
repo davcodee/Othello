@@ -5,9 +5,9 @@ import java.util.Collections;
 
 /**
  * Definición de un tablero para el juego de Othello
- * @author Rodrigo Colín
  */
 class Tablero {
+
   /**
    * Cantidad de casillas en horizontal y vertical del tablero
    */
@@ -44,7 +44,7 @@ class Tablero {
   int numeroDeTurno;
 
   /**
-   * El indice hasta el cual se pintara, si es un movimiento valido.
+   * El indice hasta el cual se pintara, si es un movimiento valido (solo se utiliza en movimientos verticales y horizontales)
    */
   int indice; 
 
@@ -164,9 +164,8 @@ class Tablero {
     } // 1:Negras, 2: Blancas.
   }
 
-
   /*
-  * Método que revisa si es valido colocar una ficha revisando las fichas a la izquierda.
+  * Método que revisa si es valido colocar una ficha revisando las fichas a la izquierda de donde se quiere poner la ficha.
    * @param lista La lista de fichas a revisar.
    * @param iterador El indice desde el cual se quiere empezar a iterar.
    */
@@ -175,7 +174,7 @@ class Tablero {
     int fichaActual = getColorActual(); 
     int fichaContraria = getColorContraria();
 
-    // Primero revisamos que si hay una ficha del color del lado izquierdo, en caso contrario es un movimiento invalido.
+    // Primero revisamos que si hay una ficha del color contrario del lado izquierdo, en caso contrario es un movimiento invalido.
     if (listaIterador.hasPrevious() && listaIterador.previous() == fichaContraria) {
       while (listaIterador.hasPrevious()) { 
         indice = listaIterador.previousIndex();
@@ -194,7 +193,7 @@ class Tablero {
   }
 
   /*
-  * Método que revisa si es valido colocar una ficha revisando las fichas a la derecha.
+  * Método que revisa si es valido colocar una ficha revisando las fichas a la derecha de donde se quiere poner la ficha.
    * @param lista La lista de fichas a revisar.
    * @param iterador El indice desde el cual se quiere empezar a iterar.
    */
@@ -202,10 +201,11 @@ class Tablero {
     ListIterator<Integer> listaIterador = lista.listIterator(iterador);
     int fichaActual = getColorActual(); 
     int fichaContraria = getColorContraria();
+
     if (listaIterador.hasNext()) {
       listaIterador.next();
     }
-    // Primero revisamos que si hay una ficha del color del lado derecho, en caso contrario es un movimiento invalido.
+    // Primero revisamos que si hay una ficha del color contrario del lado derecho, en caso contrario es un movimiento invalido.
     if (listaIterador.hasNext() && listaIterador.next() == fichaContraria) {
 
       while (listaIterador.hasNext()) { 
@@ -225,7 +225,7 @@ class Tablero {
   }
 
   /*
-  * Método que nos da las fichas en la misma columna (vertical)
+  * Método que nos da la lista de fichas en la misma columna (vertical) de donde se quiere agregar la ficha.
    * @param posX Coordenada horizontal de la casilla a verificar
    * @param posY Coordenada vertical de la casilla a verificar
    */
@@ -235,8 +235,6 @@ class Tablero {
     for (int celda = 0; celda < dimension; celda++) {
       columna.add(mundo[posX][celda]);
     }
-    println();
-    println("columna: " + columna + " indice: " + indice);
     return columna;
   }
 
@@ -247,9 +245,9 @@ class Tablero {
    */
   boolean validoEnColumna(int posX, int posY) {
     List<Integer> columna = mismaColumna(posX);
+    //Primero revisaremos el lado izquierdo desde la casilla a verificar.
     boolean valido = revisaIzquierda(columna, posY);
     boolean esValido = false;
-    println("validoEnColumna-indiceI: " + indice);
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -258,7 +256,6 @@ class Tablero {
       }
     }
     valido = revisaDerecha(columna, posY);
-    println("validoEnColumna-indiceD: " + indice);
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -287,7 +284,7 @@ class Tablero {
   }
 
   /*
- * Método que nos da las fichas que están en la misma fila (horizontal)
+ * Método que nos da las fichas que están en la misma fila (horizontal) de la casilla a verificar.
    * @param posY Coordenada vertical de la casilla a verificar
    */
   List<Integer> mismaFila(int posY) {
@@ -296,8 +293,6 @@ class Tablero {
     for (int celda = 0; celda <  dimension; celda++) {
       fila.add(mundo[celda][posY]);
     }
-    println();
-    println("fila: " + fila + " indice: " + indice);
     return fila;
   }
 
@@ -310,7 +305,6 @@ class Tablero {
     List<Integer> fila = mismaFila(posY);
     boolean valido = revisaIzquierda(fila, posX);
     boolean esValido = false;
-    println("validoEnFila-indiceI: " + indice);
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -319,7 +313,6 @@ class Tablero {
       }
     }
     valido = revisaDerecha(fila, posX);
-    println("validoEnColumna-indiceD: " + indice);
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -330,9 +323,8 @@ class Tablero {
     return esValido;
   }
 
-
   /**
-   * Método que nos da la lista de fichas que están en la diagonal (/) empezando desde abajo
+   * Método que nos da la lista de fichas que están en la diagonal derecha (/) empezando desde abajo
    * @param posX Coordenada horizontal de la casilla a verificar
    * @param posY Coordenada vertical de la casilla a verificar
    */
@@ -362,21 +354,18 @@ class Tablero {
       valorFila++;
       valorColumna--;
     }
-
-    println();
-    println("diagonalD: " + diagonal + " indice: " + indice);
     return diagonal;
   }
 
   /**
-   * Método que nos da la lista de fichas que están en la diagonal (\) empezando desde arriba
+   * Método que nos da la lista de fichas que están en la diagonal izquierda (\) empezando desde arriba
    * @param posX Coordenada horizontal de la casilla a verificar
    * @param posY Coordenada vertical de la casilla a verificar
    */
   List<Integer> enDiagonalIzquierda(int posX, int posY) {
     List<Integer> diagonal = new ArrayList<Integer>();
     List<Integer> temp = new ArrayList<Integer>();
-    iteradorDiagonal = 0;
+    iteradorDiagonal = 0; 
     //Parte Izquierda (hacia arriba) empezando desde donde se da clic
     int valorFila = posX;
     int valorColumna = posY;
@@ -399,13 +388,11 @@ class Tablero {
       valorFila++;
       valorColumna++;
     }
-    println();
-    println("diagonalI: " + diagonal + " indice: " + indice);
     return diagonal;
   }
 
   /*
-  * Método que verifica si el movimiento en diagonal(/) es valido, y de ser asi pinta las fichas "atrapadas"
+  * Método que verifica si el movimiento en diagonal derecha(/) es valido, y de ser asi pinta las fichas "atrapadas"
    * @param posX Coordenada horizontal de la casilla a verificar
    * @param posY Coordenada vertical de la casilla a verificar
    */
@@ -413,38 +400,40 @@ class Tablero {
     List<Integer> diagonal = enDiagonalDerecha(posX, posY);
     boolean valido = revisaIzquierda(diagonal, iteradorDiagonal);
     boolean esValido = false;
-    println("validoEnDiagonalD-indiceI: " + indice);
+
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
       int valorFila = posX - 1;
       int valorColumna = posY + 1;
-      while (valorFila >= indice && valorColumna < dimension) {
-        if(mundo[valorFila][valorColumna] == 0){ break;}
+      while (valorFila >= 0 && valorColumna < dimension) {
+        if (mundo[valorFila][valorColumna] == getColorActual() || mundo[valorFila][valorColumna] == 0) { 
+          break;
+        }
         mundo[valorFila][valorColumna] = getColorActual();
         valorFila--;
         valorColumna++;
       }
     }
     valido = revisaDerecha(diagonal, iteradorDiagonal);
-    println("validoEnDiagonalD-indiceD: " + indice);
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
-      int valorFila = posX;
-      int valorColumna = posY;
-      while (valorFila <= indice && valorColumna  >= 0) {
+      int valorFila = posX+1;
+      int valorColumna = posY-1;
+      while (valorFila < dimension && valorColumna >= 0 ) {
+        if (mundo[valorFila][valorColumna] == getColorActual() || mundo[valorFila][valorColumna] == 0) { 
+          break;
+        }
         mundo[valorFila][valorColumna] = getColorActual();
         valorFila++;
         valorColumna--;
       }
     }
-
-    return valido;
-
+    return esValido;
   }
-  /*
-  * Método que verifica si el movimiento en diagonal(\) es valido y de ser asi pinta las fichas "atrapadas"
+
+  /* Método que verifica si el movimiento en diagonal izquierda (\) es valido y de ser asi pinta las fichas "atrapadas"
    * @param posX Coordenada horizontal de la casilla a verificar
    * @param posY Coordenada vertical de la casilla a verificar
    */
@@ -452,35 +441,40 @@ class Tablero {
     List<Integer> diagonal = enDiagonalIzquierda(posX, posY);
     boolean valido = revisaIzquierda(diagonal, iteradorDiagonal);
     boolean esValido = false;
-    println("validoEnDiagonalI-indiceI: " + indice);
+
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
       int valorFila = posX - 1;
       int valorColumna = posY - 1;
-      while (valorFila >= indice && valorColumna >= 0) {
-        if(mundo[valorFila][valorColumna] == 0){ break;}
+
+      while (valorFila >= 0 && valorColumna >= 0) {
+        if (mundo[valorFila][valorColumna] == getColorActual() || mundo[valorFila][valorColumna] == 0) { 
+          break;
+        }
         mundo[valorFila][valorColumna] = getColorActual();
         valorFila--;
         valorColumna--;
       }
     }
     valido = revisaDerecha(diagonal, iteradorDiagonal);
-    println("validoEnDiagonalI-indiceD: " + indice);
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
-      int valorFila = posX;
-      int valorColumna = posY;
-      while (valorFila <= indice && valorColumna < dimension) {
+      int valorFila = posX+1;
+      int valorColumna = posY+1;
+      while (valorFila < dimension && valorColumna < dimension) {
+        if (mundo[valorFila][valorColumna] == getColorActual() || mundo[valorFila][valorColumna] == 0) { 
+          break;
+        }
         mundo[valorFila][valorColumna] = getColorActual();
         valorFila++;
         valorColumna++;
       }
     }
     return esValido;
-
   }
+
   /**
    * Método que nos devuelve el turno actual. 
    * true para el turno de las negras y false para el turno de las blancas.
