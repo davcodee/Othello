@@ -162,11 +162,11 @@ class Tablero {
       return 1;
     } // 1:Negras, 2: Blancas.
   }
-  
+
   /**
-  * Método que nos devuelve el mundo actual.
-  */
-  int[][] getMundo(){
+   * Método que nos devuelve el mundo actual.
+   */
+  int[][] getMundo() {
     return mundo;
   }
 
@@ -250,7 +250,7 @@ class Tablero {
   boolean validoEnColumna(int posX, int posY, int[][]mundo) {
     List<Integer> columna = mismaColumna(posX, mundo);
     //Primero revisaremos el lado izquierdo desde la casilla a verificar.
-    boolean valido = revisaIzquierda(columna, posY,getColorActual());
+    boolean valido = revisaIzquierda(columna, posY, getColorActual());
     boolean esValido = false;
     if (valido) {
       esValido = true;
@@ -283,53 +283,52 @@ class Tablero {
     boolean diagonalI = validoEnDiagonalIzquierda(posX, posY, mundo);
     if ( columna || fila || diagonalD || diagonalI) {
       return true;
-      
     }
     return false;
   }
-  
-  boolean tiroValido(int posX, int posY,int[][]mundo, int colorActual) {
-    if(tiroFila(posX,posY,mundo,colorActual) || tiroColumna(posX,posY,mundo,colorActual) || 
-    tiroDiagonalD(posX,posY, mundo,colorActual) || tiroDiagonalI(posX,posY, mundo,colorActual)){
+
+  boolean tiroValido(int posX, int posY, int[][]mundo, int colorActual) {
+    if (tiroFila(posX, posY, mundo, colorActual) || tiroColumna(posX, posY, mundo, colorActual) || 
+      tiroDiagonalD(posX, posY, mundo, colorActual) || tiroDiagonalI(posX, posY, mundo, colorActual)) {
       return true;
     }
     return false;
   }
-  
+
   /*
  * Método que dice si es un tiro valido en fila SIN pintar las fichas.
- */
-  boolean tiroFila(int posX, int posY,int[][]mundo,int colorActual) {
-  List<Integer> fila = mismaFila(posY, mundo);
-  if (revisaIzquierda(fila, posX,colorActual) || revisaDerecha(fila, posX,colorActual)) return true;
-  return false;
+   */
+  boolean tiroFila(int posX, int posY, int[][]mundo, int colorActual) {
+    List<Integer> fila = mismaFila(posY, mundo);
+    if (revisaIzquierda(fila, posX, colorActual) || revisaDerecha(fila, posX, colorActual)) return true;
+    return false;
   }
   /*
  * Método que dice si es un tiro valido en columna SIN pintar las fichas.
- */
-  boolean tiroColumna(int posX, int posY,int[][]mundo,int colorActual) {
-  List<Integer> columna = mismaColumna(posX, mundo);
-  if (revisaIzquierda(columna, posY,colorActual) || revisaDerecha(columna, posY,colorActual)) return true;
-  return false;
+   */
+  boolean tiroColumna(int posX, int posY, int[][]mundo, int colorActual) {
+    List<Integer> columna = mismaColumna(posX, mundo);
+    if (revisaIzquierda(columna, posY, colorActual) || revisaDerecha(columna, posY, colorActual)) return true;
+    return false;
   }
   /*
  * Método que dice si es un tiro valido en diagonal derecha (/) SIN pintar las fichas.
- */
-  boolean tiroDiagonalD(int posX, int posY,int[][]mundo,int colorActual) {
-  List<Integer> diagonalD = enDiagonalDerecha(posX, posY, mundo);
-  if (revisaIzquierda(diagonalD, iteradorDiagonal,colorActual) || revisaDerecha(diagonalD, iteradorDiagonal,colorActual)) return true;
-  return false;
+   */
+  boolean tiroDiagonalD(int posX, int posY, int[][]mundo, int colorActual) {
+    List<Integer> diagonalD = enDiagonalDerecha(posX, posY, mundo);
+    if (revisaIzquierda(diagonalD, iteradorDiagonal, colorActual) || revisaDerecha(diagonalD, iteradorDiagonal, colorActual)) return true;
+    return false;
   }
   /*
  * Método que dice si es un tiro valido en diagonal izquierda (\) SIN pintar las fichas.
- */
-  boolean tiroDiagonalI(int posX, int posY,int[][]mundo,int colorActual) {
-   List<Integer> diagonalI = enDiagonalIzquierda(posX, posY, mundo);
-  if (revisaIzquierda(diagonalI, iteradorDiagonal,colorActual) || revisaDerecha(diagonalI, iteradorDiagonal,colorActual)) return true;
-  return false;
+   */
+  boolean tiroDiagonalI(int posX, int posY, int[][]mundo, int colorActual) {
+    List<Integer> diagonalI = enDiagonalIzquierda(posX, posY, mundo);
+    if (revisaIzquierda(diagonalI, iteradorDiagonal, colorActual) || revisaDerecha(diagonalI, iteradorDiagonal, colorActual)) return true;
+    return false;
   }
-    
-   
+
+
 
   /*
  * Método que nos da las fichas que están en la misma fila (horizontal) de la casilla a verificar.
@@ -349,9 +348,9 @@ class Tablero {
    * @param posX Coordenada horizontal de la casilla a verificar
    * @param posY Coordenada vertical de la casilla a verificar
    */
-  boolean validoEnFila(int posX, int posY,int[][]mundo) {
+  boolean validoEnFila(int posX, int posY, int[][]mundo) {
     List<Integer> fila = mismaFila(posY, mundo);
-    boolean valido = revisaIzquierda(fila, posX,getColorActual());
+    boolean valido = revisaIzquierda(fila, posX, getColorActual());
     boolean esValido = false;
     if (valido) {
       esValido = true;
@@ -360,7 +359,7 @@ class Tablero {
         mundo[i][posY] = getColorActual();
       }
     }
-    valido = revisaDerecha(fila, posX,getColorActual());
+    valido = revisaDerecha(fila, posX, getColorActual());
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -446,7 +445,7 @@ class Tablero {
    */
   boolean validoEnDiagonalDerecha(int posX, int posY, int[][]mundo) {
     List<Integer> diagonal = enDiagonalDerecha(posX, posY, mundo);
-    boolean valido = revisaIzquierda(diagonal, iteradorDiagonal,getColorActual());
+    boolean valido = revisaIzquierda(diagonal, iteradorDiagonal, getColorActual());
     boolean esValido = false;
 
     if (valido) {
@@ -463,7 +462,7 @@ class Tablero {
         valorColumna++;
       }
     }
-    valido = revisaDerecha(diagonal, iteradorDiagonal,getColorActual());
+    valido = revisaDerecha(diagonal, iteradorDiagonal, getColorActual());
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -487,7 +486,7 @@ class Tablero {
    */
   boolean validoEnDiagonalIzquierda(int posX, int posY, int[][]mundo) {
     List<Integer> diagonal = enDiagonalIzquierda(posX, posY, mundo);
-    boolean valido = revisaIzquierda(diagonal, iteradorDiagonal,getColorActual());
+    boolean valido = revisaIzquierda(diagonal, iteradorDiagonal, getColorActual());
     boolean esValido = false;
 
     if (valido) {
@@ -505,7 +504,7 @@ class Tablero {
         valorColumna--;
       }
     }
-    valido = revisaDerecha(diagonal, iteradorDiagonal,getColorActual());
+    valido = revisaDerecha(diagonal, iteradorDiagonal, getColorActual());
     if (valido) {
       esValido = true;
       // Si ya sabemos que es un movimiento valido queremos que pinte las fichas del color actual.
@@ -547,49 +546,89 @@ class Tablero {
       }
     return contador;
   }
-  
-  
+
+
   /**
    * Método que nos devuelve una lista con las posiciones de todas las fichas del mismo color.
    * @param El tablero del que se quieren obtener las fichas
    * @param El color de las fichas que se contaran -> 1: Negras, 2: Blancas
    *
    List<List<Integer>> fichasDelMismoColor(int[][] tablero, int colorFicha){
-     List<List<Integer>> fichas = new ArrayList<List<Integer>>();
-     int lista = 0;
-     for(int i = 0; i < dimension; i++){
-       for(int j = 0; j < dimension; j++){
-         if(tablero[i][j] == colorFicha){
-           fichas.add(new ArrayList<Integer>());
-           fichas.get(lista).add(i);
-           fichas.get(lista).add(j);
-           lista++;
-         }
-       }
-     }
-     println(fichas);
-     return fichas;
+   List<List<Integer>> fichas = new ArrayList<List<Integer>>();
+   int lista = 0;
+   for(int i = 0; i < dimension; i++){
+   for(int j = 0; j < dimension; j++){
+   if(tablero[i][j] == colorFicha){
+   fichas.add(new ArrayList<Integer>());
+   fichas.get(lista).add(i);
+   fichas.get(lista).add(j);
+   lista++;
+   }
+   }
+   }
+   println(fichas);
+   return fichas;
    }*/
-   
-   /**
-    * Método que nos devuelve todos los posibles movimientos de un jugador.
-    * @param El tablero del que se quieren obtener las fichas
-    * @param El color de las fichas que se contaran -> 1: Negras, 2: Blancas
-    */
-    List<List<Integer>> posiblesTiros(int[][] tablero, int colorFicha){
+
+  /**
+   * Método que nos devuelve todos los posibles movimientos de un jugador.
+   * @param El tablero del que se quieren obtener las fichas
+   * @param El color de las fichas que se contaran -> 1: Negras, 2: Blancas
+   */
+  List<List<Integer>> posiblesTiros(int[][] tablero, int colorFicha) {
     List<List<Integer>> fichas = new ArrayList<List<Integer>>();
     int lista = 0;
-    
-     for(int i = 0; i < dimension; i++){
-       for(int j = 0; j < dimension; j++){
-         if(tiroValido(i,j, tablero,colorFicha) && !estaOcupado(i,j)){
-           fichas.add(new ArrayList<Integer>());
-           fichas.get(lista).add(i);
-           fichas.get(lista).add(j);
-           lista++;
-         }
-       }
-     }
-      return fichas;
+    //Recorre todo el tablero y checa para cada casilla si es un tiro valido para el color de ficha elegido.
+    for (int i = 0; i < dimension; i++) {
+      for (int j = 0; j < dimension; j++) {
+        if (tiroValido(i, j, tablero, colorFicha) && !estaOcupado(i, j)) {
+          fichas.add(new ArrayList<Integer>());
+          fichas.get(lista).add(i);
+          fichas.get(lista).add(j);
+          lista++;
+        }
+      }
     }
+    return fichas;
+  }
+
+  /**
+   * Método que calcula que a cuantas casillas esta una casilla de la esquina más cercana.
+   * @param posX El valor de la coordenada x en las casillas del tablero.
+   * @param posY El valor de la coordenada y en las casillas del tablero.
+   */
+  int calculaEsquina(int posX, int posY) {
+    int valor = 0;
+    // Primer cuadrante del tablero
+    if (posX > 3 && posY < 4) {
+      valor = Math.max(7-posX, posY);
+    }
+    // Segundo cuadrante del tablero.
+    if (posX < 4 && posY < 4) {
+      valor = Math.max(posX, posY);
+    }
+    // Tercer cuadrante del tablero.
+    if (posX < 4 && posY > 3) {
+      valor = Math.max(posX, 7-posY);
+    }
+    // Cuarto cuadrante del tablero.
+    if (posX > 3 && posY > 3) {
+      valor = Math.max(7-posX, 7-posY);
+    }
+    return valor;
+  }
+
+  /**
+   * Método que calcula cuantas lineas son validas la jugada de una ficha fijandose en filas, columnas y diagonales. (adyacencias)
+   * @param posX El valor de la coordenada x en las casillas del tablero.
+   * @param posY El valor de la coordenada y en las casillas del tablero.
+   */
+  int calculaAdyacencias(int posX, int posY, int[][]mundo, int colorActual) {
+    int valor = 0;
+    if (tiroFila(posX, posY, mundo, colorActual)) valor += 1; 
+    if (tiroColumna(posX, posY, mundo, colorActual)) valor += 1; 
+    if (tiroDiagonalD(posX, posY, mundo, colorActual)) valor += 1;  
+    if (tiroDiagonalI(posX, posY, mundo, colorActual)) valor += 1; 
+    return valor;
+  }
 }
