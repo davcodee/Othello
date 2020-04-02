@@ -1,8 +1,12 @@
 import java.util.*;
 public class Nodo{
 
+    /*Hijos de nuesto nodo*/
     public LinkedList<Nodo> hijos;
+    /*Tablero de nuestro nodo*/
     private Tablero tablero;
+    /*Valor Eurístico de nuestro nodo*/
+    private int value;
 
 
 
@@ -10,7 +14,10 @@ public class Nodo{
 
         this.tablero = t;
         hijos = new LinkedList<Nodo>();
-    }
+        //TODO : aplicar la heuríritca
+        value = 0 ;
+       
+     }
 
 
     public void setDato(Tablero t){
@@ -20,8 +27,17 @@ public class Nodo{
     public Tablero getDato(){
         return this.tablero;
     }
+    
+     public void setValue(int value){
+       this.value = value;
+     }
+     public int getValue(){
+        return value;
+     }  
+     
+    
 
-    public LinkedList<Nodo> getHjos(){
+    public LinkedList<Nodo> getHijos(){
         return hijos;
     }
     /*
