@@ -622,6 +622,7 @@ class Tablero {
     if(colorActual == 1){ fichas = fichasTotales.x; } else { fichas = fichasTotales.y; }
     if(esquinas == 1) { esquinas = 4; } // Para que evite caer en casillas adyacentes a las esquinas
     float valor = fichas + (adyacencias * 2) - esquinas; //Se multiplica por 2 para que sea un factor más importante que el número de fichas
+    if(esquinas == 0) { valor = valor*2; } //Para asegurar que si puede tirar en una esquina lo haga
     return valor;
   }
 }
