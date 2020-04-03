@@ -547,29 +547,6 @@ class Tablero {
     return contador;
   }
 
-
-  /**
-   * Método que nos devuelve una lista con las posiciones de todas las fichas del mismo color.
-   * @param El tablero del que se quieren obtener las fichas
-   * @param El color de las fichas que se contaran -> 1: Negras, 2: Blancas
-   *
-   List<List<Integer>> fichasDelMismoColor(int[][] tablero, int colorFicha){
-   List<List<Integer>> fichas = new ArrayList<List<Integer>>();
-   int lista = 0;
-   for(int i = 0; i < dimension; i++){
-   for(int j = 0; j < dimension; j++){
-   if(tablero[i][j] == colorFicha){
-   fichas.add(new ArrayList<Integer>());
-   fichas.get(lista).add(i);
-   fichas.get(lista).add(j);
-   lista++;
-   }
-   }
-   }
-   println(fichas);
-   return fichas;
-   }*/
-
   /**
    * Método que nos devuelve todos los posibles movimientos de un jugador.
    * @param El tablero del que se quieren obtener las fichas
@@ -629,6 +606,22 @@ class Tablero {
     if (tiroColumna(posX, posY, mundo, colorActual)) valor += 1; 
     if (tiroDiagonalD(posX, posY, mundo, colorActual)) valor += 1;  
     if (tiroDiagonalI(posX, posY, mundo, colorActual)) valor += 1; 
+    return valor;
+  }
+  
+  /**
+  * HEURISTICA OTHELLO
+  * Toma encuenta 3 criterios: el número de fichas ganadas, 
+  * el número de adyacencias y que tan cerca de una esquina se encuentra.
+  */
+  float heuristica(int posX, int posY, int[][]mundo, int colorActual){
+    int adyacencias = calculaAdyacencias(posX, posY, mundo, colorActual); //numero de adyacencias
+    int esquinas = calculaEsquina(posX, posY); //numero de casillas para llegar a la esquina mas cercana
+    PVector fichasTotales = cantidadFichas(mundo); //numero de fichas en el tablero actual.
+    float fichas = 0;
+    if(colorActual == 1){ fichas = fichasTotales.x; } else { fichas = fichasTotales.y; }
+    if(esquinas == 1) { esquinas = 4; } // Para que evite caer en casillas adyacentes a las esquinas
+    float valor = fichas + (adyacencias * 2) - esquinas; //Se multiplica por 2 para que sea un factor más importante que el número de fichas
     return valor;
   }
 }
